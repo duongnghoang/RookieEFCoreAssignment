@@ -26,5 +26,11 @@ internal sealed class SalaryConfiguration : IEntityTypeConfiguration<Salary>
         builder.Property(salary => salary.SalaryAmount)
             .HasColumnType("decimal")
             .HasPrecision(18, 2);
+
+        // Seed data
+        builder.HasData(
+            new Salary { Id = 1, EmployeeId = 1, SalaryAmount = 50000 },
+            new Salary { Id = 2, EmployeeId = 2, SalaryAmount = 60000 }
+        );
     }
 }

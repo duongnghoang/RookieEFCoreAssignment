@@ -17,5 +17,11 @@ internal sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
         // Configure relationships
         builder.Property(project => project.Name)
             .HasMaxLength(100);
+
+        // Seed data
+        builder.HasData(
+            new Project { Id = 1, Name = "Project Alpha" },
+            new Project { Id = 2, Name = "Project Beta" }
+        );
     }
 }

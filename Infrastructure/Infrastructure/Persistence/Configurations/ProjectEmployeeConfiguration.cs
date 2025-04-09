@@ -26,5 +26,11 @@ internal sealed class ProjectEmployeeConfiguration : IEntityTypeConfiguration<Pr
             .WithMany(employee => employee.ProjectEmployees)
             .HasForeignKey(projectEmployee => projectEmployee.EmployeeId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Seed data
+        builder.HasData(
+            new ProjectEmployee { ProjectId = 1, EmployeeId = 1, Enable = true },
+            new ProjectEmployee { ProjectId = 2, EmployeeId = 2, Enable = true }
+        );
     }
 }
