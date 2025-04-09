@@ -4,12 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Persistence.Configurations;
 
+/// <summary>
+/// Configuration class for the <see cref="Department"/> model.
+/// </summary>
 internal sealed class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 {
     public void Configure(EntityTypeBuilder<Department> builder)
     {
+        // Configure primary key
         builder.HasKey(department => department.Id);
 
+        // Configure properties
         builder.Property(department => department.Name)
             .HasMaxLength(50);
 
