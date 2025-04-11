@@ -27,8 +27,8 @@ internal sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 
         // Seed data
         builder.HasData(
-            new Employee { Id = 1, Name = "John Doe", DepartmentId = 1, JoinedDate = new DateTime(2020, 5, 1) },
-            new Employee { Id = 2, Name = "Jane Smith", DepartmentId = 2, JoinedDate = new DateTime(2021, 3, 15) }
+            new Employee { Id = 1, Name = "John Doe", DepartmentId = 1, JoinedDate = new DateOnly(2020, 5, 1) },
+            new Employee { Id = 2, Name = "Jane Smith", DepartmentId = 2, JoinedDate = new DateOnly(2021, 3, 15) }
         );
     }
 }

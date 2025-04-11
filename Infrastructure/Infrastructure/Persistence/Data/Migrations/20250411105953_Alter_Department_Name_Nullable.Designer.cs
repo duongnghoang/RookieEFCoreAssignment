@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250409100634_Initial")]
-    partial class Initial
+    [Migration("20250411105953_Alter_Department_Name_Nullable")]
+    partial class Alter_Department_Name_Nullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace Infrastructure.Persistence.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -76,8 +75,8 @@ namespace Infrastructure.Persistence.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("JoinedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("JoinedDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -88,6 +87,22 @@ namespace Infrastructure.Persistence.Data.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DepartmentId = 1,
+                            JoinedDate = new DateOnly(2020, 5, 1),
+                            Name = "John Doe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DepartmentId = 2,
+                            JoinedDate = new DateOnly(2021, 3, 15),
+                            Name = "Jane Smith"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Project", b =>
@@ -106,6 +121,18 @@ namespace Infrastructure.Persistence.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Project Alpha"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Project Beta"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.ProjectEmployee", b =>
@@ -124,6 +151,20 @@ namespace Infrastructure.Persistence.Data.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("ProjectEmployees");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = 1,
+                            ProjectId = 1,
+                            Enable = true
+                        },
+                        new
+                        {
+                            EmployeeId = 2,
+                            ProjectId = 2,
+                            Enable = true
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Salary", b =>
@@ -147,6 +188,20 @@ namespace Infrastructure.Persistence.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Salaries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EmployeeId = 1,
+                            SalaryAmount = 50000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EmployeeId = 2,
+                            SalaryAmount = 60000m
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.Employee", b =>

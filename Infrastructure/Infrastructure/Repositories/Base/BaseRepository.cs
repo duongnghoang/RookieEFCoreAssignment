@@ -1,40 +1,54 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Persistence.Data;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.Base;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public class BaseRepository<TEntity, TResponse> : IBaseRepository<TEntity, TResponse>
+    where TEntity : class
+    where TResponse : IResponseDto
 {
-    private readonly ApplicationDbContext _context;
+    private protected readonly ApplicationDbContext Context;
 
-    public BaseRepository(ApplicationDbContext context)
+    protected BaseRepository(ApplicationDbContext context)
     {
-        _context = context;
+        Context = context;
     }
 
-    public async Task<T?> GetByIdAsync(int id)
+    public virtual async Task<TEntity?> GetByIdAsync(int id)
     {
-        return await _context.Set<T>().FindAsync(id);
+        var entity = await Context.Set<TEntity>().FindAsync(id);
+
+        return entity;
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public virtual async Task<IEnumerable<TResponse>> GetAllAsync()
     {
-        return await _context.Set<T>().AsNoTracking().ToListAsync();
+        var entities = await Context.Set<TEntity>()
+            .AsNoTracking()
+            .ToListAsync();
+
+        return entities.Adapt<IEnumerable<TResponse>>();
     }
 
-    public async Task AddAsync(T entity)
+    public virtual async Task AddAsync(TEntity entity)
     {
-        await _context.Set<T>().AddAsync(entity);
+        await Context.Set<TEntity>().AddAsync(entity);
     }
 
-    public void Update(T entity)
+    public virtual void Update(TEntity entity)
     {
-        _context.Set<T>().Update(entity);
+        Context.Set<TEntity>().Update(entity);
     }
 
-    public void Delete(T entity)
+    public virtual void Delete(TEntity entity)
     {
-        _context.Set<T>().Remove(entity);
+        Context.Set<TEntity>().Remove(entity);
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await Context.SaveChangesAsync();
     }
 }

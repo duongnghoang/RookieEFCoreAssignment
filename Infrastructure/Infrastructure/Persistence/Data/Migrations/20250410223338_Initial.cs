@@ -47,7 +47,7 @@ namespace Infrastructure.Persistence.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    JoinedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    JoinedDate = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,6 +114,42 @@ namespace Infrastructure.Persistence.Data.Migrations
                     { 2, "Finance" },
                     { 3, "Accountant" },
                     { 4, "HR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Projects",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Project Alpha" },
+                    { 2, "Project Beta" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "DepartmentId", "JoinedDate", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateOnly(2020, 5, 1), "John Doe" },
+                    { 2, 2, new DateOnly(2021, 3, 15), "Jane Smith" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProjectEmployees",
+                columns: new[] { "EmployeeId", "ProjectId", "Enable" },
+                values: new object[,]
+                {
+                    { 1, 1, true },
+                    { 2, 2, true }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Salaries",
+                columns: new[] { "Id", "EmployeeId", "SalaryAmount" },
+                values: new object[,]
+                {
+                    { 1, 1, 50000m },
+                    { 2, 2, 60000m }
                 });
 
             migrationBuilder.CreateIndex(

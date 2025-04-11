@@ -1,4 +1,10 @@
-﻿using Infrastructure.Persistence.Data;
+﻿using Application.Interfaces;
+using Application.Interfaces.Repositories;
+using Domain.Interfaces;
+using Infrastructure.Persistence.Data;
+using Infrastructure.Persistence.Transactions;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +22,17 @@ public static class DependencyInjection
         services.AddDbContext<ApplicationDbContext>(options => 
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             );
+
+        // Add Repositories
+        services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
+
+        services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+        services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+        services.AddScoped<ISalaryRepository, SalaryRepository>();
+        services.AddScoped<IProjectRepository, ProjectRepository>();
+        services.AddScoped<IProjectEmployeeRepository, ProjectEmployeeRepository>();
+
+        services.AddScoped<ITransactionManager, TransactionManager>();
 
         return services;
     }

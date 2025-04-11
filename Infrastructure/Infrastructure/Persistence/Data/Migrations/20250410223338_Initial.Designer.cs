@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250409145024_Seed_Dummy_Data")]
-    partial class Seed_Dummy_Data
+    [Migration("20250410223338_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,8 +76,8 @@ namespace Infrastructure.Persistence.Data.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("JoinedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("JoinedDate")
+                        .HasColumnType("date");
 
                     b.Property<string>("Name")
                         .HasMaxLength(50)
@@ -94,14 +94,14 @@ namespace Infrastructure.Persistence.Data.Migrations
                         {
                             Id = 1,
                             DepartmentId = 1,
-                            JoinedDate = new DateTime(2020, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JoinedDate = new DateOnly(2020, 5, 1),
                             Name = "John Doe"
                         },
                         new
                         {
                             Id = 2,
                             DepartmentId = 2,
-                            JoinedDate = new DateTime(2021, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            JoinedDate = new DateOnly(2021, 3, 15),
                             Name = "Jane Smith"
                         });
                 });

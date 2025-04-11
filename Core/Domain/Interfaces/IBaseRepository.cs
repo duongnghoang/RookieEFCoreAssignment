@@ -1,10 +1,15 @@
-﻿namespace Domain.Interfaces;
+﻿using Domain.Entities;
 
-public interface IBaseRepository<T> where T : class
+namespace Domain.Interfaces;
+
+public interface IBaseRepository<TEntity, TResponse>
+    where TEntity : class
+    where TResponse : IResponseDto
 {
-    Task<T?> GetByIdAsync(int id);
-    Task<IEnumerable<T>> GetAllAsync();
-    Task AddAsync(T entity);
-    void Update(T entity);
-    void Delete(T entity);
+    Task<TEntity?> GetByIdAsync(int id);
+    Task<IEnumerable<TResponse>> GetAllAsync();
+    Task AddAsync(TEntity entity);
+    void Update(TEntity entity);
+    void Delete(TEntity entity);
+    Task SaveChangesAsync();
 }
