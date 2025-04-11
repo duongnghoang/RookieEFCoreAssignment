@@ -9,4 +9,5 @@ public interface IEmployeeRepository : IBaseRepository<Employee, EmployeeRespons
     Task<IEnumerable<EmployeeWithNameResponseDto>> GetWithDepartmentNameAsync();
     Task<EmployeeResponseDto?> GetByIdWithSalaryAsync(int id);
     Task<IEnumerable<EmployeeResponseDto>> GetEmployeesGreaterSalaryAndJoinedDate();
+    Task<IEnumerable<EmployeeWithProjectResponseDto>> GetEmployeesWithProjects();
 }

@@ -65,6 +65,14 @@ namespace WebAPI.Controllers
             return Ok(employees);
         }
 
+        [HttpGet("get-with-projects")]
+        public async Task<IActionResult> GetWithProjects()
+        {
+            var employees = await _employeeFacade.GetEmployeeWithProjects();
+
+            return Ok(employees);
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateEmployee(int id, [FromBody] UpdateEmployeeRequestDto request)
         {

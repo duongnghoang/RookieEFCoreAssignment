@@ -13,4 +13,5 @@ public interface IEmployeeFacade
     Task<Result> UpdateEmployee(int id, UpdateEmployeeRequestDto request);
     Task<Result> DeleteEmployee(int id);
     Task<Result> GetEmployeesWithConditions();
+    Task<Result<IEnumerable<EmployeeWithProjectResponseDto>>> GetEmployeeWithProjects();
 }

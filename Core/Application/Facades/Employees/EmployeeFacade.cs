@@ -118,4 +118,11 @@ public class EmployeeFacade : IEmployeeFacade
 
         return Result.Success(employees);
     }
+
+    public async Task<Result<IEnumerable<EmployeeWithProjectResponseDto>>> GetEmployeeWithProjects()
+    {
+        var employees = await _employeeRepository.GetEmployeesWithProjects();
+
+        return Result.Success(employees);
+    }
 }
