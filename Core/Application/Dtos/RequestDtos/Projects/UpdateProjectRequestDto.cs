@@ -1,6 +1,9 @@
-﻿namespace Application.Dtos.RequestDtos.Projects;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.Dtos.RequestDtos.Projects;
 
 public class UpdateProjectRequestDto
 {
-    public required string Name { get; set; }
+    [Required]
+    public string? Name { get; set; }
 }
